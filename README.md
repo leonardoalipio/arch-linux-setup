@@ -49,8 +49,9 @@ cd .. && rm -rf yay
 
 ```bash
 yay -S asdf-vm
-# Add to bash
-echo '. /opt/asdf-vm/asdf.sh' >> ~/.bashrc
+# Add to fish
+mkdir -p ~/.config/fish
+echo 'source /opt/asdf-vm/asdf.fish' >> ~/.config/fish/config.fish
 ```
 
 ---
@@ -93,80 +94,53 @@ git config --global pull.rebase false
 git config --global core.autocrlf input
 ```
 
-### Useful Aliases
-
-```bash
-git config --global alias.st status
-git config --global alias.co checkout
-git config --global alias.br branch
-git config --global alias.lg "log --oneline --graph --decorate --all"
-git config --global alias.undo "reset --soft HEAD~1"
-```
-
 ---
 
 ## Shell & Terminal
 
-### Bash + Oh My Bash
+### Fish Shell
 
 ```bash
-sudo pacman -S bash
-
-# Oh My Bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+sudo pacman -S fish
+chsh -s /usr/bin/fish
 ```
 
-### Plugins
+### Basic Config
 
-Oh My Bash uses plugins via ~/.bashrc:
+```fish
+# ~/.config/fish/config.fish
 
-```bash
-plugins=(git docker kubectl)
+set -gx EDITOR "code --wait"
+set -gx DOTNET_CLI_TELEMETRY_OPTOUT 1
+set -gx ASPNETCORE_ENVIRONMENT Development
+set -gx NODE_ENV development
 ```
 
-### Extra Plugin (autosuggestions-like)
+### Plugins (Fisher)
 
 ```bash
-# bash-completion (essential)
-sudo pacman -S bash-completion
-
-# ble.sh (advanced line editor + autosuggestions)
-git clone --depth=1 https://github.com/akinomyoga/ble.sh.git ~/.ble.sh
-
-echo '[[ $- == *i* ]] && source ~/.ble.sh/ble.sh' >> ~/.bashrc
+curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
 ```
 
-### Starship Prompt (optional)
+### Recommended Plugins
 
 ```bash
-sudo pacman -S starship
-echo 'eval "$(starship init bash)"' >> ~/.bashrc
+# autosuggestions + completions already built-in
+fisher install IlanCosman/tide@v6   # prompt
+fisher install PatrickF1/fzf.fish   # fzf integration
 ```
 
 ---
 
 ## SSH
 
-### Generate SSH Key
-
 ```bash
 ssh-keygen -t ed25519 -C "your@email.com" -f ~/.ssh/id_ed25519
 ```
 
-### SSH Agent
-
 ```bash
-eval "$(ssh-agent -s)"
+eval "(ssh-agent -c)"
 ssh-add ~/.ssh/id_ed25519
-```
-
-Auto start:
-
-```bash
-if [ -z "$SSH_AUTH_SOCK" ]; then
-  eval "$(ssh-agent -s)" > /dev/null
-  ssh-add ~/.ssh/id_ed25519 2>/dev/null
-fi
 ```
 
 ---
@@ -191,10 +165,10 @@ sudo pacman -S go
 
 ### Env
 
-```bash
-export GOPATH=$HOME/go
-export GOBIN=$GOPATH/bin
-export PATH=$PATH:$GOBIN
+```fish
+set -gx GOPATH $HOME/go
+set -gx GOBIN $GOPATH/bin
+set -gx PATH $PATH $GOBIN
 ```
 
 ---
@@ -221,8 +195,6 @@ asdf global nodejs lts
 
 ## Editors & IDEs
 
-### VS Code
-
 ```bash
 yay -S visual-studio-code-bin
 ```
@@ -247,37 +219,17 @@ sudo pacman -S curl wget httpie tmux make
 
 ## User Configuration
 
-### Env Vars
+### Aliases (fish)
 
-```bash
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
-export EDITOR="code --wait"
-
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
-export ASPNETCORE_ENVIRONMENT=Development
-
-export NODE_ENV=development
-```
-
-### Aliases
-
-```bash
+```fish
 alias update="sudo pacman -Syu"
-alias cleanup="sudo pacman -Rns $(pacman -Qtdq)"
+alias cleanup="sudo pacman -Rns (pacman -Qtdq)"
 
 alias g="git"
 alias d="docker"
 
 alias ..="cd .."
-alias ll="ls -lah --color=auto"
-```
-
-### Reload
-
-```bash
-source ~/.bashrc
+alias ll="ls -lah"
 ```
 
 ---
@@ -293,4 +245,4 @@ source ~/.bashrc
 * [ ] .NET installed
 * [ ] Node via asdf
 * [ ] VS Code installed
-* [ ] Bash + Oh My Bash ready
+* [ ] Fish ready
