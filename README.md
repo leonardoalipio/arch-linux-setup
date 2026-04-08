@@ -162,7 +162,6 @@ sudo pacman -S go
 sudo pacman -S dotnet-sdk aspnet-runtime
 ```
 
-
 ## Node.js
 * ### via asdf
 
