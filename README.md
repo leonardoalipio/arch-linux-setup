@@ -43,7 +43,6 @@ wsl --shutdown
 # Package Managers:
 
 * ### yay (AUR Helper)
-
 ```bash
 git clone https://aur.archlinux.org/yay.git
 cd yay
@@ -82,7 +81,7 @@ chsh -s /usr/bin/zsh
 
 * ### Basic Config
 
-```zsh
+```bash
 # ~/.zshrc
 #loop to add n folders contains bin to run
 
@@ -96,7 +95,7 @@ export PATH
 ```
 
 * ### Config Plugins Zsh + oh-my-zsh + pk10
-```zsh
+```bash
 # oh my zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
@@ -129,7 +128,7 @@ plugins=(
 ```
 
 * ### Fonts
-```zsh
+```bash
 sudo pacman -S ttf-jetbrains-mono-nerd
 ```
 
@@ -192,9 +191,31 @@ sudo pacman -S curl wget httpie tmux make
 ```
 
 ## User Configuration
+
+* ### bindkeys (zsh)
+
+```bash
+#the end of file .zshrc:
+bindkey -e
+
+# delete
+bindkey '^[[3~' delete-char
+
+# home/end
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
+
+# ctrl arrows (opcional)
+bindkey '^[[1;5C' forward-word
+bindkey '^[[1;5D' backward-word
+
+# prevents timing bug
+export KEYTIMEOUT=50
+```
+
 * ### Aliases (zsh)
 
-```zsh
+```bash
 # Performance
 DISABLE_UPDATE_PROMPT=true
 DISABLE_AUTO_UPDATE=true
